@@ -1,0 +1,202 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+
+{% block styles %}
+    <link href="{% static "project2cont/css/Round.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block title %}
+    Part 1
+{% endblock %}
+
+{% block content %}
+
+<div class="jumbotron">
+
+<div id="string">
+</div>
+
+<br>
+
+<input type="text" id="player_guess" size="4" autofocus>
+</input> &nbsp;
+<span id="min">00</span>:<span id="sec">00</span>
+&nbsp; Time spent solving current sequence
+
+<br>
+
+<input type="hidden" name="output" id="id_output"/>
+
+<p align="right">
+    <button class="Switch_button" id="Switch_button" button = "button">Switch</button>
+</p>
+
+</div>
+
+<div id="Switch_mode" class="Switch_mode">
+    You are now in the switch mode.
+</div>
+
+<input type="hidden" name="switch1" id="id_switch1"/>
+
+{{ form.errors }}
+
+    {% include Constants.instructions_summarized %}
+
+{% endblock %}
+
+{% block scripts %}
+        <!-- this needs to be in a separate file. -->
+<script>
+var string_list = {{ session.vars.string_list|json }};
+var a_count = {{ session.vars.a_count|json }};
+var length_1 = a_count.length;
+
+var me = me || {};
+me.index = null;
+me.guess = null;
+me.timer = null;
+me.pad = null;
+me.settime = null;
+me.resettime = null;
+me.check = null;
+me.makeguess = null;
+
+// This function adds an additional "0" left to single digit numbers for formatting reasons, not for functionality
+// is called repeatedly from within settime and resettime functions
+// seems harmless, but is not fundamental
+
+me.pad = function(val) {
+    return val > 9 ? val : "0" + val;
+}
+
+// This function first sets the time to zero and then increments the counter every 1000ms by 1. Minutes (sec modulo 60) and seconds separately
+// only called once at window.onload
+
+me.settime = function() {
+    me.sec = 0;
+    me.timer = setInterval(function () {
+        document.getElementById("sec").innerHTML = me.pad(++me.sec % 60);
+        document.getElementById("min").innerHTML = me.pad(parseInt(me.sec / 60, 10));
+        }, 1000)
+}
+
+me.resettime = function(){
+    clearInterval(me.timer);
+    document.getElementById("sec").innerHTML = "00";
+    document.getElementById("min").innerHTML = "00";
+
+    me.sec = 0;
+    me.timer = setInterval(function () {
+        document.getElementById("sec").innerHTML = me.pad(++me.sec % 60);
+        document.getElementById("min").innerHTML = me.pad(parseInt(me.sec / 60, 10));
+        }, 1000)
+}
+
+// This function checks whether the correct number of "a"s was provided
+// resets the input text field to empty
+
+me.check = function(x) {
+    document.getElementById("player_guess").value = "";
+
+    var el = document.createElement("input")
+    el.type = "hidden";
+    if (me.index+1 < 10){
+        el.name = "t10" + (me.index+1);
+    } else{
+        el.name = "t1" + (me.index+1);
+    }
+    el.value = me.sec;
+    el.id = el.name
+
+    var answers = document.getElementById("id_output");
+    answers.appendChild(el);
+
+    if (x === a_count[me.index]) {
+        me.makeguess(me.index+1);
+        me.resettime();
+    } else {
+        me.makeguess(me.index);
+    }
+}
+
+// This function loads and displays the next string
+
+me.makeguess = function(x) {
+    if (x >= length_1) {
+        alert("Error");
+    } else {
+        me.index = x;
+
+        var string = document.getElementById("string");
+        string.innerHTML = string_list[x];
+
+        document.getElementById("id_output").setAttribute("value",me.index);
+    }
+}
+
+// This function is called by the keydown event handler
+// it resets the time and triggers the checking function
+
+function keyDownTextField(e) {
+  var keyCode = e.keyCode;
+  if(keyCode==13) {
+    event.preventDefault();
+    var wert = document.getElementById("player_guess").value;
+    me.guess = parseInt(wert);
+    me.check(me.guess);
+    }
+}
+
+// This function is called by the keyup event handler and only blocks the enter button
+
+function keyUpTextField(e) {
+  var keyCode = e.keyCode;
+  if(keyCode==13) {
+    event.preventDefault();
+  }
+}
+
+// This function is called by the keypress event handler and only blocks the enter button
+function keyPressTextField(e) {
+  var keyCode = e.keyCode;
+  if(keyCode==13) {
+    event.preventDefault();
+  }
+}
+
+// This functions adds the switch button and send to the switch mode
+
+document.getElementById("Switch_button").addEventListener("click", function() {
+    event.preventDefault();
+    var el = document.createElement("input")
+    el.type = "hidden";
+    el.name = "additional_time"
+    el.value = me.sec;
+    el.id = el.name
+    var answers = document.getElementById("id_output");
+    answers.appendChild(el);
+    var pattern = document.getElementsByClassName("jumbotron")[0];
+        pattern.classList.add("hidden");
+    var switchmode = document.getElementsByClassName("Switch_mode");
+        switchmode[0].classList.remove("hidden");
+    var switch1 = 1;
+        document.getElementById("id_switch1").setAttribute("value",switch1);
+})
+
+// displays the first string and starts the counter
+// Importantly, the event handlers are only called here once!!!
+
+window.onload = function(){
+    me.makeguess(0);
+    me.settime();
+    var switchmode = document.getElementsByClassName("Switch_mode");
+    switchmode[0].classList.add("hidden");
+    document.addEventListener("keydown", keyDownTextField, false);
+    document.addEventListener("keyup", keyUpTextField, false);
+    document.addEventListener("keypress", keyPressTextField, false);
+}
+    </script>
+{% endblock %}
+

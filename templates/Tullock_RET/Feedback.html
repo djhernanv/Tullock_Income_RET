@@ -1,0 +1,42 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Feedback Round {{ subsession.round_number }}
+{% endblock %}
+
+{% block content %}
+
+<div class="panel panel-primary">
+  <div class="panel-heading"> Your earnings from this round: </div>
+  <div class="panel-body">
+     You solved {{ player.output|floatformat:0 }} sequences which earns you
+      {% if subsession.round_number > 1 %}
+          <strong>{{ player.income_strings|c|floatformat:0 }}</strong> Tokens.
+      {% endif %}
+      {% if subsession.round_number == 1 %}
+          <strong>{{ player.output|c|floatformat:0 }}</strong> Tokens.
+      {% endif %}
+      <br>
+     You spent {{player.time_in_switch}} seconds in the <em>switch mode</em> which earns you <strong>{{ player.output_in_switch|c|floatformat:1 }}</strong> Tokens.<br><br>
+     Your total earnings in this round are therefore: <strong>{{ player.income|c|floatformat:1 }}</strong> Tokens. <br>
+  </div>
+
+{% if subsession.round_number > Constants.round_num %}
+</div>
+    <div class="alert alert-info" role="alert">
+    <p> In the next screen you will have the opportunity to invest some of your income from this round in order to win the double payoff.
+    Your probability of winning will be equal to the share of your investment in relation to the total investments.</p>
+    </div>
+{% endif %}
+
+</div>
+
+<!-- End Table -->
+ {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static "project2treat/js/tablesort.js" %}"></script>
+{% endblock %}

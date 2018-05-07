@@ -1,0 +1,16 @@
+#string {
+    font-size: 2em;
+    display: flex;
+    justify-content: flex-start;
+
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    -ms-word-break: break-all;
+    word-break: break-all;
+}
+
+#Switch_mode {
+    font-size: 2em;
+    display: flex;
+    justify-content: center;
+}

@@ -1,0 +1,79 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree_tags %}
+
+{% block title %}
+    Results Round {{ subsession.round_number }}
+{% endblock %}
+
+{% block content %}
+
+{% if subsession.round_number < Constants.num_rounds %}
+    <p>
+        {% if player.is_winner %}
+            <div class="alert alert-success" role="alert">
+                <strong>You won the high prize!</strong>
+            </div>
+        {% else %}
+            <div class="alert alert-warning" role="alert">
+                <strong>You did not win the prize!</strong>
+            </div>
+        {% endif %}
+{% endif %}
+
+
+{% if subsession.round_number < Constants.num_rounds %}
+
+
+<div class="panel panel-primary">
+  <!-- Default panel contents -->
+  <div class="panel-heading">Group Results</div>
+  <div class="panel-body">
+      Here you can see the investments and probabilities of the group participants (you are participant <strong>{{ player.role }}</strong>):
+  </div>
+
+<!-- Begin Table -->
+<table class="table" id="table">
+
+  <tr>
+    <th class="tg-s6z2">Player</th>
+    <th class="tg-s6z2">Investment</th>
+    <th class="tg-s6z2">Probability of Winning</th>
+  </tr>
+  <tr>
+    <td class="tg-s6z2"> <strong>{{ player.role }}</strong></td>
+    <td class="tg-s6z2"><strong>{{ player.investment_amount|floatformat:0 }}</strong></td>
+      <td class="tg-s6z2"><strong>{{ player.prob|floatformat:2 }} %</strong> </td>
+  </tr>
+  <tr>
+    <td class="tg-s6z2">{{ player.get_others_in_group.0.role }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.0.investment_amount|floatformat:0 }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.0.prob|floatformat:2 }} %</td>
+  </tr>
+  <tr>
+    <td class="tg-s6z2">{{ player.get_others_in_group.1.role }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.1.investment_amount|floatformat:0 }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.1.prob|floatformat:2 }} %</td>
+  </tr>
+  <tfoot>
+  <tr>
+    <td class="tg-s6z2" colspan="1">Total</td>
+    <td class="tg-s6z2">{{ group.total_investments }}</td>
+    <td class="tg-s6z2">100%</td>
+  </tr>
+  </tfoot>
+</table>
+
+
+{% endif %}
+
+
+</div>
+
+<!-- End Table -->
+ {% next_button %}
+
+{% endblock %}
+
+{% block scripts %}
+    <script type="text/javascript" src="{% static "project2treat/js/tablesort.js" %}"></script>
+{% endblock %}
