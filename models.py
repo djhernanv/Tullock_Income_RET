@@ -10,17 +10,16 @@ from otree.common import Currency as c, currency_range, safe_json
 from otree.constants import BaseConstants
 from otree.models import BaseSubsession, BaseGroup, BasePlayer
 
-author = 'AS,GS,HV,KS'
+author = 'Hernán Villamizar'
 
 doc = """
 Real Effort Task - Letter Count
-This is the introduction to a Tullock Contest in form of a Real Effort Task
-It welcomes the participants and helps them trough the first stages
+This is the competition part to a Tullock Contest in form of a Real Effort Task and an Investment Decision
 """
 
 
 class Constants(BaseConstants):
-    name_in_url = 'tullock_RET'
+    name_in_url = 'tullock_Income_RET'
     players_per_group = 3
     num_rounds = 2
 
