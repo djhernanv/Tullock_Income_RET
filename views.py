@@ -148,10 +148,10 @@ class Results(Page):
         return self.round_number < Constants.num_rounds
 
 page_sequence = [
-    #CompetitionInstructions1,
-    #CompetitionInstructions2Example,
+    CompetitionInstructions1,
+    CompetitionInstructions2Example,
     CompetitionInstructions3,
-    #Beliefs,
+    Beliefs,
     Waiting,  # creates string list
     RET,
     Waiting2,  # sets income for winner/loser of last round

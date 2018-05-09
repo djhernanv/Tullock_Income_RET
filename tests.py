@@ -7,5 +7,10 @@ from .models import Constants
 class PlayerBot(Bot):
 
     def play_round(self):
-        yield (views.MyPage)
-        yield (views.Results)
+        yield (views.CompetitionInstructions1)
+        yield (views.CompetitionInstructions2Example)
+        yield (views.CompetitionInstructions3)
+        yield (views.Beliefs, {'avgbelief': 10, 'mostprodBTbelief': 20})
+
+
+
