@@ -102,7 +102,7 @@ class RET(Page):
                    't143',
                    't144',
                    't145',
-                   'production',
+                   'production_strings',
                    'switch1',
                    'additional_time'
                    ]

@@ -84,13 +84,13 @@ class Group(BaseGroup):
         for p in self.get_players():
             if self.round_number > 1:
                 if p.in_round(self.round_number - 1).is_winner:
-                    p.income_strings = p.production * Constants.tokensper_string_high
+                    p.income_strings = p.production_strings * Constants.tokensper_string_high
                     p.income = p.income_strings + p.income_in_switch
                 else:
-                    p.income_strings = p.production * Constants.tokensper_string
+                    p.income_strings = p.production_strings * Constants.tokensper_string
                     p.income = p.income_strings + p.income_in_switch
             else:   # in the first round all start equally
-                p.income_strings = p.production * Constants.tokensper_string
+                p.income_strings = p.production_strings * Constants.tokensper_string
                 p.income = p.income_strings + p.income_in_switch
 
     # determine payoffs:
@@ -129,7 +129,7 @@ class Player(BasePlayer):
 
     # Real Effort Task variables
     # Number of Tasks Solved
-    production = models.FloatField(default=0)
+    production_strings = models.FloatField(default=0)
     income_in_switch = models.FloatField(default=0)
     total_production = models.FloatField(default=0)
 
@@ -252,4 +252,4 @@ class Player(BasePlayer):
         self.income_in_switch = self.time_in_switch / Constants.secondsper_token
 
         # This is the sum of strings + production in switch
-        self.total_production = self.production + self.income_in_switch
+        self.total_production = self.production_strings + self.income_in_switch
