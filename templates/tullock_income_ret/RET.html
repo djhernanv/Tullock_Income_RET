@@ -26,7 +26,7 @@
 
 <br>
 
-<input type="hidden" name="output" id="id_output"/>
+<input type="hidden" name="production" id="id_production"/>
 
 <p align="right">
     <button class="Switch_button" id="Switch_button" button = "button">Switch</button>
@@ -110,7 +110,7 @@ me.check = function(x) {
     el.value = me.sec;
     el.id = el.name
 
-    var answers = document.getElementById("id_output");
+    var answers = document.getElementById("id_production");
     answers.appendChild(el);
 
     if (x === a_count[me.index]) {
@@ -132,7 +132,7 @@ me.makeguess = function(x) {
         var string = document.getElementById("string");
         string.innerHTML = string_list[x];
 
-        document.getElementById("id_output").setAttribute("value",me.index);
+        document.getElementById("id_production").setAttribute("value",me.index);
     }
 }
 
@@ -175,7 +175,7 @@ document.getElementById("Switch_button").addEventListener("click", function() {
     el.name = "additional_time"
     el.value = me.sec;
     el.id = el.name
-    var answers = document.getElementById("id_output");
+    var answers = document.getElementById("id_production");
     answers.appendChild(el);
     var pattern = document.getElementsByClassName("jumbotron")[0];
         pattern.classList.add("hidden");

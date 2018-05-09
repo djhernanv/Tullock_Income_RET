@@ -10,12 +10,12 @@
 <div class="panel panel-primary">
   <div class="panel-heading"> Your earnings from this round: </div>
   <div class="panel-body">
-     You solved {{ player.output|floatformat:0 }} sequences which earns you
+     You solved {{ player.production|floatformat:0 }} sequences which earns you
       {% if subsession.round_number > 1 %}
           <strong>{{ player.income_strings|c|floatformat:0 }}</strong> Tokens.
       {% endif %}
       {% if subsession.round_number == 1 %}
-          <strong>{{ player.output|c|floatformat:0 }}</strong> Tokens.
+          <strong>{{ player.production|c|floatformat:0 }}</strong> Tokens.
       {% endif %}
       <br>
      You spent {{player.time_in_switch}} seconds in the <em>switch mode</em> which earns you <strong>{{ player.income_in_switch|c|floatformat:1 }}</strong> Tokens.<br><br>

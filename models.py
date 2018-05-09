@@ -45,10 +45,10 @@ class Group(BaseGroup):
 
     total_investments = models.IntegerField(initial=0)  # define group variable to calculate probabilities
 
-    # determine total output
+    # determine total investments
 
     def set_total_investments(self):
-        total_investments = sum(p.investment_amount for p in self.get_players())  # retrieves a list of all individual outputs
+        total_investments = sum(p.investment_amount for p in self.get_players())  # retrieves a list of all individual incomes
         # and sums them up
         self.total_investments = total_investments
 
@@ -56,7 +56,8 @@ class Group(BaseGroup):
     def set_probabilities(self):
         self.set_total_investments()
         # probabilities do not add to 1 if all investments are equal (because of floats)
-        if len(set(p.investment_amount for p in self.get_players())) == 1:  # this means if all outputs or offers are equal
+        # this means if all investments or offers are equal
+        if len(set(p.investment_amount for p in self.get_players())) == 1:
             for p in self.get_players():
                 p.prob = 1 / Constants.players_per_group
         else:
@@ -83,14 +84,14 @@ class Group(BaseGroup):
         for p in self.get_players():
             if self.round_number > 1:
                 if p.in_round(self.round_number - 1).is_winner:
-                    p.income_strings = p.output * Constants.tokensper_string_high
+                    p.income_strings = p.production * Constants.tokensper_string_high
                     p.income = p.income_strings + p.income_in_switch
                 else:
-                    p.income_strings = p.output * Constants.tokensper_string
+                    p.income_strings = p.production * Constants.tokensper_string
                     p.income = p.income_strings + p.income_in_switch
             else:   # in the first round all start equally
-                p.income_strings = p.output * Constants.tokensper_string
-                p.income = p.total_output * Constants.tokensper_string
+                p.income_strings = p.production * Constants.tokensper_string
+                p.income = p.income_strings + p.income_in_switch
 
     # determine payoffs:
     def set_payoffs(self):
@@ -128,9 +129,9 @@ class Player(BasePlayer):
 
     # Real Effort Task variables
     # Number of Tasks Solved
-    output = models.FloatField(default=0)
+    production = models.FloatField(default=0)
     income_in_switch = models.FloatField(default=0)
-    total_output = models.FloatField(default=0)
+    total_production = models.FloatField(default=0)
 
     # available income after solving RET
     income = models.FloatField(default=0)
@@ -250,5 +251,5 @@ class Player(BasePlayer):
         # This variable determines the tokens per string received
         self.income_in_switch = self.time_in_switch / Constants.secondsper_token
 
-        # This is the sum of strings + output in switch
-        self.total_output = self.output + self.income_in_switch
+        # This is the sum of strings + production in switch
+        self.total_production = self.production + self.income_in_switch
