@@ -6,6 +6,9 @@ competition for higher wages as a Tullock Contest.
 The first part of the experiment introduces the Real Effort
 Task as a Letter Counting Task. You can access it here: https://github.com/djhernanv/Tullock_Income_Intro
 
+If you want to use this experiment in full or in part for your own purposes, feel free to do so.
+Just make sure you quote *Villamizar(2018)*.
+
 
 ### Installation
 
