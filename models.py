@@ -34,7 +34,7 @@ class Constants(BaseConstants):
     increase_per_string = 4
 
     # this is a summarized instruction to be shown under each sequence as a reminder:
-    instructions_summarized = 'Tullock_RET/InstructionsSum.html'
+    instructions_summarized = 'Tullock_Income_RET/InstructionsSum.html'
 
 
 class Subsession(BaseSubsession):
@@ -62,6 +62,8 @@ class Group(BaseGroup):
         else:
             for p in self.get_players():
                 p.prob = p.investment_amount / self.total_investments
+        for p in self.get_players():
+            p.prob_percent = p.prob * 100
 
     # determine winner
     def set_winner(self):
@@ -82,10 +84,10 @@ class Group(BaseGroup):
             if self.round_number > 1:
                 if p.in_round(self.round_number - 1).is_winner:
                     p.income_strings = p.output * Constants.tokensper_string_high
-                    p.income = p.income_strings + p.output_in_switch
+                    p.income = p.income_strings + p.income_in_switch
                 else:
                     p.income_strings = p.output * Constants.tokensper_string
-                    p.income = p.income_strings + p.output_in_switch
+                    p.income = p.income_strings + p.income_in_switch
             else:   # in the first round all start equally
                 p.income_strings = p.output * Constants.tokensper_string
                 p.income = p.total_output * Constants.tokensper_string
@@ -116,15 +118,18 @@ class Player(BasePlayer):
         doc="Probabilities of getting the Prize in the next round. Tullock"
     )
 
+    prob_percent = models.FloatField(
+        doc="Probabilities in percent of getting the prize in next round. Tullock"
+    )
     investment_amount = models.FloatField(
         default=0,
-        doc="Amount bidded by the player"
+        doc="Amount bidden by the player"
     )
 
     # Real Effort Task variables
     # Number of Tasks Solved
     output = models.FloatField(default=0)
-    output_in_switch = models.FloatField(default=0)
+    income_in_switch = models.FloatField(default=0)
     total_output = models.FloatField(default=0)
 
     # available income after solving RET
@@ -243,7 +248,7 @@ class Player(BasePlayer):
         self.time_in_switch = self.switch1 * (Constants.t - self.switch_time)
 
         # This variable determines the tokens per string received
-        self.output_in_switch = self.time_in_switch / Constants.secondsper_token
+        self.income_in_switch = self.time_in_switch / Constants.secondsper_token
 
         # This is the sum of strings + output in switch
-        self.total_output = self.output + self.output_in_switch
+        self.total_output = self.output + self.income_in_switch

@@ -10,8 +10,16 @@
         Your task is to count how many <strong> "a"s </strong> there are in the sequence of characters currently displayed.
     </p>
     <p>
-        Per correctly solved sequence you will get {{ Constants.tokensper_string }} Token. In the <strong> switch mode </strong>
-        you will get 1 token per each {{ Constants.secondsper_token }} seconds in "switch".
+        {% if subsession.round_number == 1%}
+        Per correctly solved sequence you will get {{ Constants.tokensper_string }} Token.
+        {% else %}
+            {% if winner_last %}
+                Per correctly solved sequence you will get {{ Constants.tokensper_string_high }} Tokens.
+            {% else %}
+                Per correctly solved sequence you will get {{ Constants.tokensper_string }} Token.
+            {% endif %}
+        {% endif %}
+        In the <strong> switch mode </strong> you will get 1 Token per each {{ Constants.secondsper_token }} seconds in "switch".
     </p>
     <p>
         For your convenience, these instructions will remain available during all screens of this task.

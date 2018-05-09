@@ -18,7 +18,7 @@
           <strong>{{ player.output|c|floatformat:0 }}</strong> Tokens.
       {% endif %}
       <br>
-     You spent {{player.time_in_switch}} seconds in the <em>switch mode</em> which earns you <strong>{{ player.output_in_switch|c|floatformat:1 }}</strong> Tokens.<br><br>
+     You spent {{player.time_in_switch}} seconds in the <em>switch mode</em> which earns you <strong>{{ player.income_in_switch|c|floatformat:1 }}</strong> Tokens.<br><br>
      Your total earnings in this round are therefore: <strong>{{ player.income|c|floatformat:1 }}</strong> Tokens. <br>
   </div>
 

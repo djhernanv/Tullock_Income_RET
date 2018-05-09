@@ -110,6 +110,10 @@ class RET(Page):
     def before_next_page(self):
         self.player.set_switch()
 
+    def vars_for_template(self):
+        if self.round_number > 1:
+            return {'winner_last': self.player.in_round(self.round_number - 1).is_winner}
+
 
 class Waiting2(WaitPage):
     def after_all_players_arrive(self):
@@ -139,14 +143,15 @@ class Feedback(Page):
 
 
 class Results(Page):
+
     def is_displayed(self):
         return self.round_number < Constants.num_rounds
 
 page_sequence = [
-    CompetitionInstructions1,
-    CompetitionInstructions2Example,
+    #CompetitionInstructions1,
+    #CompetitionInstructions2Example,
     CompetitionInstructions3,
-    Beliefs,
+    #Beliefs,
     Waiting,  # creates string list
     RET,
     Waiting2,  # sets income for winner/loser of last round

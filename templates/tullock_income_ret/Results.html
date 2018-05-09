@@ -42,17 +42,17 @@
   <tr>
     <td class="tg-s6z2"> <strong>{{ player.role }}</strong></td>
     <td class="tg-s6z2"><strong>{{ player.investment_amount|floatformat:0 }}</strong></td>
-      <td class="tg-s6z2"><strong>{{ player.prob|floatformat:2 }} %</strong> </td>
+      <td class="tg-s6z2"><strong>{{ player.prob_percent|floatformat:2 }} %</strong> </td>
   </tr>
   <tr>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.role }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.investment_amount|floatformat:0 }}</td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.0.prob|floatformat:2 }} %</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.0.prob_percent|floatformat:2 }} %</td>
   </tr>
   <tr>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.role }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.investment_amount|floatformat:0 }}</td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.1.prob|floatformat:2 }} %</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.1.prob_percent|floatformat:2 }} %</td>
   </tr>
   <tfoot>
   <tr>
