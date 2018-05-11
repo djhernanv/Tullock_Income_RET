@@ -29,7 +29,29 @@
 <input type="hidden" name="production_strings" id="id_production_strings"/>
 
 <p align="right">
-    <button class="Switch_button" id="Switch_button" button = "button">Switch</button>
+    <!-- Button trigger modal -->
+<button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
+  SWITCH
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="myModalLabel">Confirm</h4>
+      </div>
+      <div class="modal-body">
+        Are you sure you want to go into "switch" mode?
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+        <button type = "button" class="btn btn-primary" id="Switch_button" data-dismiss="modal">Switch</button>
+      </div>
+    </div>
+  </div>
+</div>
 </p>
 
 </div>
@@ -47,8 +69,10 @@
 {% endblock %}
 
 {% block scripts %}
+
         <!-- this needs to be in a separate file. -->
 <script>
+
 var string_list = {{ session.vars.string_list|json }};
 var a_count = {{ session.vars.a_count|json }};
 var length_1 = a_count.length;
