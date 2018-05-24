@@ -57,7 +57,7 @@ class StartSubmit(Page):
 
 class RET(Page):
     timeout_seconds = Constants.t
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['t101',
                    't102',
                    't103',
@@ -122,7 +122,7 @@ class Waiting2(WaitPage):
 
 
 class Investment(Page):
-    form_model = models.Player
+    form_model = 'player'
     form_fields = ['investment_amount']
 
     def vars_for_template(self):

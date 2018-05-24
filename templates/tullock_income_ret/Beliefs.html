@@ -1,5 +1,5 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree_tags %}
+{% load staticfiles otree %}
 {% load staticfiles %}
 
 
@@ -18,11 +18,11 @@ Please answer the following questions:
     <br>
 <ol type="1"> <!-- This starts a numbered list -->
 
-   <li> {% formfield player.avgbelief with label="What do you think will be <u>the average number</u> of sequences solved in this round by your group?" %} </li>
+   <li> {% formfield player.avgbelief label="What do you think will be <u>the average number</u> of sequences solved in this round by your group?" %} </li>
 
     <br>
 
-    <li> {% formfield player.mostprodBTbelief with label="How many sequences do you think will the most productive member of your group solve in this period?" %} </li>
+    <li> {% formfield player.mostprodBTbelief label="How many sequences do you think will the most productive member of your group solve in this period?" %} </li>
 
 </ol>
 
