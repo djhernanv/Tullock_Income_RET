@@ -48,10 +48,11 @@ class Waiting(WaitPage):
 
 
 class Beliefs(Page):
-    form_model = models.Player
-    form_fields = ['avgbelief',
-                   'mostprodBTbelief'
-                   ]
+    pass
+
+
+class StartSubmit(Page):
+    pass
 
 
 class RET(Page):
@@ -125,7 +126,7 @@ class Investment(Page):
     form_fields = ['investment_amount']
 
     def vars_for_template(self):
-        return {'income': safe_json(self.player.income)}
+        return {'income': safe_json(self.player.income_strings)}
 
     def is_displayed(self):
         return self.round_number < Constants.num_rounds
@@ -147,12 +148,17 @@ class Results(Page):
     def is_displayed(self):
         return self.round_number < Constants.num_rounds
 
+    def vars_for_template(self):
+        if self.round_number > 1:
+            return {'winner_last': self.player.in_round(self.round_number - 1).is_winner}
+
 page_sequence = [
     CompetitionInstructions1,
     CompetitionInstructions2Example,
     CompetitionInstructions3,
-    Beliefs,
+    #Beliefs,
     Waiting,  # creates string list
+    StartSubmit,
     RET,
     Waiting2,  # sets income for winner/loser of last round
     Feedback,  # information about production

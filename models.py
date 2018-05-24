@@ -21,7 +21,7 @@ This is the competition part to a Tullock Contest in form of a Real Effort Task 
 class Constants(BaseConstants):
     name_in_url = 'tullock_Income_RET'
     players_per_group = 3
-    num_rounds = 2
+    num_rounds = 3
 
     t = 60  # Total Time in seconds available for both solving and staying in switch
     time_in_minutes = t / 60
@@ -104,10 +104,6 @@ class Player(BasePlayer):
     # give each player a letter for identification (Important for Feedback)
     def role(self):
         return string.ascii_uppercase[self.id_in_group - 1]
-
-    # Beliefs Variables
-    avgbelief = models.PositiveIntegerField()
-    mostprodBTbelief = models.PositiveIntegerField()
 
     # Contest Variables
     is_winner = models.BooleanField(

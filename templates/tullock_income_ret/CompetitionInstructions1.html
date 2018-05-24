@@ -3,28 +3,36 @@
 {% load humanize %}
 
 {% block title %}
-    Part 2 Instructions (1/3)
+    Grouping
 {% endblock %}
 
 {% block content %}
 
    <div class="instructions well well-lg">
     <p>
-        You have been randomly allocated into a group of {{ Constants.players_per_group|apnumber }} participants: A, B and C<br>
-        You are participant <strong>{{ player.role }}</strong>. <br>
-        The experiment is anonymous. You will not be told who the other participants are and they will not be informed about your identity.</p>
+        Until now you have played on your own. Now, you have been randomly allocated into a group of {{ Constants.players_per_group|apnumber }} participants: A, B and C<br>
+        You are participant <strong>{{ player.role }}</strong>.
+        <br>
+    </p>
+       <p>
+        Your decisions and results will be absolutely anonymous. Your identity will neither be revealed to your co-participants nor to the experimenters
+        at any time during or after the experiment.</p>
     <p>
-        There will be <strong>{{ Constants.num_rounds|apnumber }} rounds</strong> of {{ Constants.time_in_minutes|apnumber }} minutes. You and the other group members will be performing the same task as in the trial.</p>
+        There will be <strong>{{ Constants.num_rounds|apnumber }} rounds</strong> of {{ Constants.time_in_minutes|apnumber }} minutes.
+        You and the other group members will be performing the same type of task as in the rounds before.</p>
     <p>
-        In the <strong>first round all participants will have the same wage </strong> of 1 Token per correctly solved string.<br>
+        In the <strong>first round all participants will have the same wage </strong> of 1 Token per correctly solved sequence.<br>
     <p>
-        In all the <strong>following rounds</strong>, exactly <strong>one out of the {{ Constants.players_per_group|apnumber }} group members</strong> will get
+        In all the <strong>following rounds</strong> exactly <strong>one out of the {{ Constants.players_per_group|apnumber }} group members</strong> will get
         a wage of <strong><em>{{ Constants.tokensper_string_high|apnumber }} tokens</em></strong> per correct sequence.
+       The other players will keep their wage of {{ Constants.tokensper_string|apnumber }} token per string. All participants in all rounds will get 1 token per
+       {{ Constants.secondsper_token }} seconds spent in "switch".
    </p>
     <p>
-        To win the double wage you will have the opportunity to invest some of your earnings from the <i>Letter Counting Task</i>.
-        Your probability of obtaining the higher reward is equal to your share of total investment. You can keep what you do not invest,
-        but your investment will not be refunded if you do not win the prize nor can you use your earnings from previous rounds.
+        To win the higher wage you will have the opportunity to invest some of your earnings from counting "a"s in the <i>Letter Counting Task</i>
+        (but not those from spending time in "switch").
+        Your probability of obtaining the higher wage is equal to your share of all the investments in your group. You can keep the tokens that you do not invest,
+        but your investment will not be refunded if you do not win the prize. You cannot you use your earnings from previous rounds.
         The more you invest, the higher are your chances!
     </p>
     <p>

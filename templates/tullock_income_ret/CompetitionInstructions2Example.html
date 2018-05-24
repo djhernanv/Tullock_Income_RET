@@ -29,7 +29,7 @@ padding: 1em;
 
 
 {% block title %}
-    Part 2 Instructions Example (2/3)
+    Investment Example
 {% endblock %}
 
 {% block content %}
@@ -38,7 +38,7 @@ padding: 1em;
   <!-- Default panel contents -->
 <div class="panel-heading">Group Investments</div>
   <div class="panel-body">
-    Here you can see an artificial example of individual and group investments:
+    Here you can see an illustrative example of individual and group investments:
   </div>
 
 
@@ -84,12 +84,20 @@ padding: 1em;
 
 <!-- End Table -->
 
-
+    <div class="instructions well well-lg">
 
    <p>
-	In this scenario, participant A invested 16 tokens which corresponds to 40 % of total group investments.<br>
-	Therefore, participant A will get the <em>double wage</em> with a probability of 40 % in the next round.</p>
+	In this scenario, participant A invested 16 tokens which corresponds to 40 % of the sum of all investments by the group members.<br>
+	Therefore, participant A will get the <em>higher wage</em> in the next round with a probability of 40 %.</p>
+    <hr>
 
+    <p>
+        Making an investment can potentially increase your earnings in the following period but will reduce your earnings for the current period.
+        Your earnings in the two first rounds were:
+
+    </p>
+
+    </div>
 
   {% next_button %}
 

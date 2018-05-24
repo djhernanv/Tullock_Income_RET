@@ -3,28 +3,31 @@
 
 
 {% block styles %}
-    <link href="{% static "project2cont/css/Round.css" %}" rel="stylesheet">
+    <link href="{% static "tullock_income_ret/css/Round.css" %}" rel="stylesheet">
 {% endblock %}
 
 {% block title %}
-    Part 1
+    Letter Counting Task Round 2.{{ subsession.round_number }}
 {% endblock %}
 
 {% block content %}
 
 <div class="jumbotron">
 
+<span class="label label-primary">
 <span id="min">00</span>:<span id="sec">00</span>
-&nbsp; Time spent solving current sequence
+</span>
+
+    <br>
+    <span class="label label-success" id="number_strings">00</span>
 
 <div id="string">
 </div>
 
 <br>
 
-<input type="text" id="player_guess" size="4" autofocus>
+<input type="number" id="player_guess" size="4" autofocus>
 </input> &nbsp;
-
 
 <br>
 
@@ -56,11 +59,27 @@
 </div>
 </p>
 
+
 </div>
 
-<div id="Switch_mode" class="Switch_mode">
-    You are now in the switch mode.
+<div id="Switch_mode" class="Switch_mode panel panel-primary">
+    <div class="panel-heading">
+        You are now in the "Switch" mode.
+    </div>
+    <div class="panel-body">
+        <p>
+        You solved <span class="label label-success" id="number_strings">20</span> sequences.
+        </p>
+
+     Your earnings from "Switch" mode are:
+        <br>
+    <h3>
+        <span class="label label-primary"><span id="token_counter">00</span> Token
+        </span>
+    </h3>
+    </div>
 </div>
+
 
 <input type="hidden" name="switch1" id="id_switch1"/>
 
@@ -71,10 +90,8 @@
 {% endblock %}
 
 {% block scripts %}
-
         <!-- this needs to be in a separate file. -->
 <script>
-
 var string_list = {{ session.vars.string_list|json }};
 var a_count = {{ session.vars.a_count|json }};
 var length_1 = a_count.length;
@@ -89,16 +106,9 @@ me.resettime = null;
 me.check = null;
 me.makeguess = null;
 
-// This function adds an additional "0" left to single digit numbers for formatting reasons, not for functionality
-// is called repeatedly from within settime and resettime functions
-// seems harmless, but is not fundamental
-
 me.pad = function(val) {
     return val > 9 ? val : "0" + val;
 }
-
-// This function first sets the time to zero and then increments the counter every 1000ms by 1. Minutes (sec modulo 60) and seconds separately
-// only called once at window.onload
 
 me.settime = function() {
     me.sec = 0;
@@ -119,9 +129,6 @@ me.resettime = function(){
         document.getElementById("min").innerHTML = me.pad(parseInt(me.sec / 60, 10));
         }, 1000)
 }
-
-// This function checks whether the correct number of "a"s was provided
-// resets the input text field to empty
 
 me.check = function(x) {
     document.getElementById("player_guess").value = "";
@@ -147,8 +154,6 @@ me.check = function(x) {
     }
 }
 
-// This function loads and displays the next string
-
 me.makeguess = function(x) {
     if (x >= length_1) {
         alert("Error");
@@ -158,12 +163,12 @@ me.makeguess = function(x) {
         var string = document.getElementById("string");
         string.innerHTML = string_list[x];
 
+        var number_strings = x;
+        document.getElementById("number_strings").innerHTML = number_strings;
+
         document.getElementById("id_production_strings").setAttribute("value",me.index);
     }
 }
-
-// This function is called by the keydown event handler
-// it resets the time and triggers the checking function
 
 function keyDownTextField(e) {
   var keyCode = e.keyCode;
@@ -175,8 +180,6 @@ function keyDownTextField(e) {
     }
 }
 
-// This function is called by the keyup event handler and only blocks the enter button
-
 function keyUpTextField(e) {
   var keyCode = e.keyCode;
   if(keyCode==13) {
@@ -184,7 +187,6 @@ function keyUpTextField(e) {
   }
 }
 
-// This function is called by the keypress event handler and only blocks the enter button
 function keyPressTextField(e) {
   var keyCode = e.keyCode;
   if(keyCode==13) {
@@ -192,15 +194,13 @@ function keyPressTextField(e) {
   }
 }
 
-// This functions adds the switch button and send to the switch mode
-
 document.getElementById("Switch_button").addEventListener("click", function() {
     event.preventDefault();
-    var el = document.createElement("input")
+    var el = document.createElement("input");
     el.type = "hidden";
-    el.name = "additional_time"
+    el.name = "additionaltime1";
     el.value = me.sec;
-    el.id = el.name
+    el.id = el.name;
     var answers = document.getElementById("id_production_strings");
     answers.appendChild(el);
     var pattern = document.getElementsByClassName("jumbotron")[0];
@@ -209,10 +209,17 @@ document.getElementById("Switch_button").addEventListener("click", function() {
         switchmode[0].classList.remove("hidden");
     var switch1 = 1;
         document.getElementById("id_switch1").setAttribute("value",switch1);
-})
 
-// displays the first string and starts the counter
-// Importantly, the event handlers are only called here once!!!
+    var tokens = 0;
+    var el = document.getElementById('token_counter');
+
+    function incrementSeconds() {
+    tokens += 0.1;
+    el.innerText = Math.round( tokens * 10 ) / 10;
+    }
+
+    var cancel = setInterval(incrementSeconds, 1000);
+})
 
 window.onload = function(){
     me.makeguess(0);

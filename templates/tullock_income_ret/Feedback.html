@@ -19,13 +19,13 @@
       {% endif %}
       <br>
      You spent {{player.time_in_switch}} seconds in the <em>switch mode</em> which earns you <strong>{{ player.income_in_switch|c|floatformat:1 }}</strong> Tokens.<br><br>
-     Your total income in this round are therefore: <strong>{{ player.income|c|floatformat:1 }}</strong> Tokens. <br>
+     Your total income in this round is therefore: <strong>{{ player.income|c|floatformat:1 }}</strong> Tokens. <br>
   </div>
 
 {% if subsession.round_number > Constants.round_num %}
 </div>
     <div class="alert alert-info" role="alert">
-    <p> In the next screen you will have the opportunity to invest some of your income from this round in order to win the double wage.
+    <p> In the next screen you will have the opportunity to invest some of your income from this round in order to win the higher wage.
     Your probability of winning will be equal to the share of your investment in relation to the total investments.</p>
     </div>
 {% endif %}
