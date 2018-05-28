@@ -1,24 +1,24 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree_tags %}
+{% load staticfiles otree %}
 
 {% block title %}
     Start Confirmation
 {% endblock %}
 
 {% block content %}
-
+<hr>
 
     <div class="jumbotron">
+        In the next screen you will have the opportunity to earn money as explained in the screens before.
+    </p>
     <h1>Are you ready to start?</h1>
         <p>
-            Pressing the <span class="label label-danger">Start</span> button will start the letter counting task
+            Pressing the <span class="badge badge-danger">Start</span> button will start the letter counting task
         </p>
-        <hr>
-        <hr>
-        <hr>
-        <hr>
+        <br>
+        <br>
+        <br>
     <button class="btn btn-danger btn-block">Start</button>
     </div>
-
 
 {% endblock %}

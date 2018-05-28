@@ -1,5 +1,5 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree_tags %}
+{% load staticfiles otree %}
 
 {% block title %}
     Investment Instructions
@@ -7,7 +7,9 @@
 
 {% block content %}
 
-    <div class="instructions well well-lg">
+<hr>
+   <div class="card bg-light instructions">
+   <div class="card-body">
     <p>
         After the task you will get feedback about the number of sequences you solved and your earnings. Subsequently you will have the opportunity to make an investment
         and, finally, you will see the results for the group.</p>
@@ -19,6 +21,7 @@
         regarding the production of the other players.
 	    After that, you may still need to wait for other participants to get ready.
     </p>
+   </div>
     </div>
 
     {% next_button %}

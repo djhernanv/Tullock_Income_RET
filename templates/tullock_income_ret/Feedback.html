@@ -1,15 +1,15 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree_tags %}
+{% load staticfiles otree %}
 
 {% block title %}
-    Feedback Round {{ subsession.round_number }}
+    Feedback Round 2.{{ subsession.round_number }}
 {% endblock %}
 
 {% block content %}
-
-<div class="panel panel-primary">
-  <div class="panel-heading"> Your earnings from this round: </div>
-  <div class="panel-body">
+<hr>
+<div class="card">
+  <div class="card-header text-white bg-primary mb-3"> Your earnings from this round: </div>
+  <div class="card-body">
      You solved {{ player.production_strings|floatformat:0 }} sequences which earns you
       {% if subsession.round_number > 1 %}
           <strong>{{ player.income_strings|c|floatformat:0 }}</strong> Tokens.
@@ -22,16 +22,15 @@
      Your total income in this round is therefore: <strong>{{ player.income|c|floatformat:1 }}</strong> Tokens. <br>
   </div>
 
-{% if subsession.round_number > Constants.round_num %}
+{% if subsession.round_number > Constants.num_rounds %}
 </div>
     <div class="alert alert-info" role="alert">
     <p> In the next screen you will have the opportunity to invest some of your income from this round in order to win the higher wage.
     Your probability of winning will be equal to the share of your investment in relation to the total investments.</p>
     </div>
 {% endif %}
-
 </div>
-
+<br>
 <!-- End Table -->
  {% next_button %}
 

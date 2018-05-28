@@ -1,5 +1,5 @@
 {% extends "global/Page.html" %}
-{% load staticfiles otree_tags %}
+{% load staticfiles otree %}
 {% load humanize %}
 
 {% block title %}
@@ -7,8 +7,10 @@
 {% endblock %}
 
 {% block content %}
+<hr>
+   <div class="card bg-light instructions">
+   <div class="card-body">
 
-   <div class="instructions well well-lg">
     <p>
         Until now you have played on your own. Now, you have been randomly allocated into a group of {{ Constants.players_per_group|apnumber }} participants: A, B and C<br>
         You are participant <strong>{{ player.role }}</strong>.
@@ -21,13 +23,19 @@
         There will be <strong>{{ Constants.num_rounds|apnumber }} rounds</strong> of {{ Constants.time_in_minutes|apnumber }} minutes.
         You and the other group members will be performing the same type of task as in the rounds before.</p>
     <p>
-        In the <strong>first round all participants will have the same wage </strong> of 1 Token per correctly solved sequence.<br>
+        <div class="card card-primary border-primary mb-3">
+         <div class="card-body">
+        <p>
+        In the <strong>first round all participants will have the same wage </strong> of 1 Token per correctly solved sequence.
+       </p>
     <p>
         In all the <strong>following rounds</strong> exactly <strong>one out of the {{ Constants.players_per_group|apnumber }} group members</strong> will get
         a wage of <strong><em>{{ Constants.tokensper_string_high|apnumber }} tokens</em></strong> per correct sequence.
        The other players will keep their wage of {{ Constants.tokensper_string|apnumber }} token per string. All participants in all rounds will get 1 token per
        {{ Constants.secondsper_token }} seconds spent in "switch".
    </p>
+        </div>
+        </div>
     <p>
         To win the higher wage you will have the opportunity to invest some of your earnings from counting "a"s in the <i>Letter Counting Task</i>
         (but not those from spending time in "switch").
@@ -37,6 +45,7 @@
     </p>
     <p>
         On the next screen, you will see an illustrative example of how the prize is awarded.</p>
+   </div>
    </div>
 
     {% next_button %}
