@@ -33,13 +33,14 @@ padding: 1em;
 {% endblock %}
 
 {% block content %}
-
-<div class="panel panel-primary">
+<hr>
+<div class="card card-primary">
   <!-- Default panel contents -->
-<div class="panel-heading">Group Investments</div>
-  <div class="panel-body">
+<div class="card-header text-white bg-primary mb-3">Group Investments</div>
+  <div class="card-body">
     Here you can see an illustrative example of individual and group investments:
-  </div>
+    <br>
+      <br>
 
 
 <!-- Begin Table -->
@@ -79,12 +80,13 @@ padding: 1em;
   </tr>
   </tfoot>
 </table>
-
+  </div>
 </div>
 
 <!-- End Table -->
-
-    <div class="instructions well well-lg">
+<br>
+    <div class="card bg-light instructions">
+    <div class="card-body">
 
    <p>
 	In this scenario, participant A invested 16 tokens which corresponds to 40 % of the sum of all investments by the group members.<br>
@@ -93,10 +95,22 @@ padding: 1em;
 
     <p>
         Making an investment can potentially increase your earnings in the following period but will reduce your earnings for the current period.
-        Your earnings in the two first rounds were:
-
     </p>
-
+        <div class="card card-primary border-primary mb-3">
+            <div class="card-header">Your Earnings in the Previous Rounds</div>
+         <div class="card-body">
+             In the first round, <strong>with the wage of {{ Constants.tokensper_string }} Token per sequence</strong>, your earned:
+             <div class="badge badge-dark">
+                 {{ income_1 }} Tokens
+             </div>
+        <br>
+             In the second round, <strong>with the wage of {{ Constants.tokensper_string_high }} Tokens per sequence</strong>, you earned
+             <div class="badge badge-dark">
+             {{ income_2 }} Tokens
+             </div>
+         </div>
+        </div>
+    </div>
     </div>
 
   {% next_button %}

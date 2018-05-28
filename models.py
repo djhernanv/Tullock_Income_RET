@@ -105,6 +105,14 @@ class Player(BasePlayer):
     def role(self):
         return string.ascii_uppercase[self.id_in_group - 1]
 
+    # Beliefs Variables
+
+    investment_belief_0 = models.FloatField()
+    investment_belief_1 = models.FloatField()
+
+    production_belief_0 = models.PositiveIntegerField()
+    production_belief_1 = models.PositiveIntegerField()
+
     # Contest Variables
     is_winner = models.BooleanField(
         initial=False,

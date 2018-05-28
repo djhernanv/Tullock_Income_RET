@@ -19,6 +19,11 @@ class CompetitionInstructions2Example(Page):
     def is_displayed(self):
         return self.round_number == 1
 
+    def vars_for_template(self):
+        return {'income_1': self.participant.vars['income_1'],
+                'income_2': self.participant.vars['income_2'],
+                }
+
 
 class CompetitionInstructions3(Page):
     def is_displayed(self):
@@ -47,8 +52,13 @@ class Waiting(WaitPage):
         self.session.vars['a_count'] = a_count
 
 
-class Beliefs(Page):
-    pass
+class BeliefsProduction(Page):
+    form_model = 'player'
+    form_fields = [
+        'production_belief_0',
+        'production_belief_1',
+
+    ]
 
 
 class StartSubmit(Page):
@@ -121,6 +131,15 @@ class Waiting2(WaitPage):
         self.group.set_incomes()
 
 
+class BeliefsInvestment(Page):
+    form_model = 'player'
+    form_fields = [
+        'investment_belief_0',
+        'investment_belief_1',
+
+    ]
+
+
 class Investment(Page):
     form_model = 'player'
     form_fields = ['investment_amount']
@@ -150,18 +169,22 @@ class Results(Page):
 
     def vars_for_template(self):
         if self.round_number > 1:
-            return {'winner_last': self.player.in_round(self.round_number - 1).is_winner}
+            return {'winner_last': self.player.in_round(self.round_number - 1).is_winner,
+                    'winner_last_0': self.player.get_others_in_group()[0].in_round(self.round_number - 1).is_winner,
+                    'winner_last_1': self.player.get_others_in_group()[1].in_round(self.round_number - 1).is_winner,
+                    }
 
 page_sequence = [
     CompetitionInstructions1,
     CompetitionInstructions2Example,
     CompetitionInstructions3,
-    #Beliefs,
+    BeliefsProduction,
     Waiting,  # creates string list
     StartSubmit,
     RET,
     Waiting2,  # sets income for winner/loser of last round
     Feedback,  # information about production
+    BeliefsInvestment,
     Investment,  # Participant can invest some of her earnings to win prize
     Waiting3,  # sets probabilities and determines winner
     Results,  # what the investments were and who won

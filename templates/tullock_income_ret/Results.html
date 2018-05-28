@@ -6,6 +6,7 @@
 {% endblock %}
 
 {% block content %}
+<hr>
 
 {% if subsession.round_number < Constants.num_rounds %}
     <p>
@@ -24,12 +25,11 @@
 {% if subsession.round_number < Constants.num_rounds %}
 
 
-<div class="panel panel-primary">
+<div class="card">
   <!-- Default panel contents -->
-  <div class="panel-heading">Group Results</div>
-  <div class="panel-body">
+  <div class="card-header text-white bg-primary mb-3">Group Results</div>
+  <div class="card-body">
       Here you can see the investments and probabilities of the group participants (you are participant <strong>{{ player.role }}</strong>):
-  </div>
 
 <!-- Begin Table -->
 <table class="table" id="table">
@@ -38,7 +38,7 @@
     <th class="tg-s6z2">Player</th>
     <th class="tg-s6z2">Investment</th>
     <th class="tg-s6z2">Probability of Winning</th>
-    <th class="tg-s6z2">Wage</th>
+    <th class="tg-s6z2">Wage in present round</th>
     <th class="tg-s6z2">Income from Sequence Solving</th>
     <th class="tg-s6z2">No. of Sequences Solved</th>
     <th class="tg-s6z2">Income from Switch</th>
@@ -61,7 +61,7 @@
     </strong></td>
     <td class="tg-s6z2"> <strong>{{ player.income_strings|floatformat:0 }}</strong></td>
     <td class="tg-s6z2"> <strong>{{ player.production_strings|floatformat:0 }}</strong></td>
-    <td class="tg-s6z2"> <strong>{{ player.income_in_switch }}</strong></td>
+    <td class="tg-s6z2"> <strong>{{ player.income_in_switch|floatformat:1 }}</strong></td>
     <td class="tg-s6z2"> <strong>{{ player.income }}</strong></td>
   </tr>
   <tr>
@@ -69,8 +69,8 @@
     <td class="tg-s6z2">{{ player.get_others_in_group.0.investment_amount|floatformat:0 }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.prob_percent|floatformat:2 }} %</td>
     <td class="tg-s6z2">
-        {% if subsession.round_number > 1 %}
-            {% if player.get_others_in_group.0.winner_last %}
+            {% if subsession.round_number > 1 %}
+            {% if winner_last_0 %}
                 2
             {% else %}
                 1
@@ -81,16 +81,16 @@
     </td>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.income_strings|floatformat:0 }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.production_strings|floatformat:0 }}</td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.0.income_in_switch|floatformat:2 }} </td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.0.income|floatformat:2 }} </td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.0.income_in_switch|floatformat:1 }} </td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.0.income|floatformat:1 }} </td>
   </tr>
   <tr>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.role }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.investment_amount|floatformat:0 }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.prob_percent|floatformat:2 }} %</td>
     <td class="tg-s6z2">
-        {% if subsession.round_number > 1 %}
-            {% if player.get_others_in_group.1.winner_last %}
+            {% if subsession.round_number > 1 %}
+            {% if winner_last_1 %}
                 2
             {% else %}
                 1
@@ -101,8 +101,8 @@
     </td>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.income_strings|floatformat:0 }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.production_strings|floatformat:0 }}</td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.1.income_in_switch|floatformat:2 }}</td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.1.income|floatformat:2 }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.1.income_in_switch|floatformat:1 }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.1.income|floatformat:1 }}</td>
   </tr>
   <tfoot>
   <tr>
@@ -121,14 +121,12 @@
 
 {% endif %}
 
-
+</div>
 </div>
 
 <!-- End Table -->
+    <br>
  {% next_button %}
 
 {% endblock %}
 
-{% block scripts %}
-    <script type="text/javascript" src="{% static "project2treat/js/tablesort.js" %}"></script>
-{% endblock %}

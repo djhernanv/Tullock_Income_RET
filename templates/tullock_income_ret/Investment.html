@@ -25,6 +25,11 @@
 
 
 {% block content %}
+<hr>
+
+    <div class="card">
+        <div class="card-header text-white bg-primary mb-3"> Submit your investment:</div>
+    <div class="card-body">
 
     <p>
         Your disposable income is <strong>{{ player.income_strings|floatformat:0 }} Token</strong>.
@@ -36,12 +41,15 @@
             <input type="hidden" name="investment_amount" id="id_investment_amount" value="0">
             <div class="bid-slider"></div>
             <div class="bid">Your investment: <strong><span class="bid-value"></span> </strong>Token.
-                You keep <strong><span class="payoff-value"></span></strong></strong></div>
-            <div class="payoff">If you win the contest, you will earn a wage of <strong>{{Constants.tokensper_string_high}}.</strong>
-                If you loose it, a wage of <strong>{{Constants.tokensper_string}}</strong>. </div>
+                You keep <strong><span class="payoff-value"></span></strong></div>
+            <div class="payoff">If you win the contest, you will earn a wage of <strong>{{Constants.tokensper_string_high}} Tokens per sequences.</strong>
+                If you lose it, a wage of <strong>{{Constants.tokensper_string}}</strong>. </div>
+        </div>
          </div>
     </div>
+    </div>
 
+    <br>
     {% next_button %}
 
 

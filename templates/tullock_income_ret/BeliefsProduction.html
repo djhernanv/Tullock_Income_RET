@@ -1,0 +1,35 @@
+{% extends "global/Page.html" %}
+{% load staticfiles otree %}
+{% load staticfiles %}
+
+
+{% block title %}
+    Your Beliefs Round 2.{{ subsession.round_number }}
+{% endblock %}
+
+{% block styles %}
+    <link href="{% static "tullock_income_ret/css/Belief.css" %}" rel="stylesheet">
+{% endblock %}
+
+{% block content %}
+<hr>
+
+Please answer the following questions:
+    <br>
+    <br>
+<ol type="1"> <!-- This starts a numbered list -->
+
+
+   <li> How many sequences do you think will player {{ player.get_others_in_group.0.role }} solve?:
+       {% formfield player.production_belief_0 label="" %} </li>
+
+   <li> How many sequences do you think will player {{ player.get_others_in_group.1.role }} solve?:
+       {% formfield player.production_belief_1 label="" %} </li>
+
+</ol>
+
+
+<br>
+    {% next_button %}
+
+{% endblock %}
