@@ -132,6 +132,10 @@ class Waiting2(WaitPage):
 
 
 class BeliefsInvestment(Page):
+
+    def is_displayed(self):
+        return self.round_number < Constants.num_rounds
+
     form_model = 'player'
     form_fields = [
         'investment_belief_0',

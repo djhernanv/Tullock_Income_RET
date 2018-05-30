@@ -23,7 +23,7 @@ class Constants(BaseConstants):
     players_per_group = 3
     num_rounds = 3
 
-    t = 60  # Total Time in seconds available for both solving and staying in switch
+    t = 180  # Total Time in seconds available for both solving and staying in switch
     time_in_minutes = t / 60
 
     tokensper_string = 1
