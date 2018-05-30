@@ -107,7 +107,7 @@
 <script>
 
 
-//this initiates the tooltip to explain the counters
+//this initiates the tooltip mouseover to explain the counters
 $(function () {
   $('[data-toggle="tooltip"]').tooltip()
 })
@@ -127,18 +127,24 @@ me.resettime = null;
 me.check = null;
 me.makeguess = null;
 
+// This function adds an additional "0" left to single digit numbers for formatting reasons, not for functionality
+// is called repeatedly from within settime and resettime functions
 me.pad = function(val) {
     return val > 9 ? val : "0" + val;
-}
+};
 
+// This function first sets the time to zero and then increments the counter every 1000ms by 1. Minutes (sec modulo 60) and seconds separately
+// only called once at window.onload
 me.settime = function() {
     me.sec = 0;
     me.timer = setInterval(function () {
         document.getElementById("sec").innerHTML = me.pad(++me.sec % 60);
         document.getElementById("min").innerHTML = me.pad(parseInt(me.sec / 60, 10));
         }, 1000)
-}
+};
 
+// This function stops the active timer and sets the display to 00:00. Subsequently, the timer is restarted.
+// is called by function makeguess on keydown event xxx -> potentially contributing to our problem, removed for testing
 me.resettime = function(){
     clearInterval(me.timer);
     document.getElementById("sec").innerHTML = "00";
@@ -149,8 +155,10 @@ me.resettime = function(){
         document.getElementById("sec").innerHTML = me.pad(++me.sec % 60);
         document.getElementById("min").innerHTML = me.pad(parseInt(me.sec / 60, 10));
         }, 1000)
-}
+};
 
+// This function checks whether the correct number of "a"s was provided
+// resets the input text field to empty
 me.check = function(x) {
     document.getElementById("player_guess").value = "";
 
@@ -162,7 +170,7 @@ me.check = function(x) {
         el.name = "t1" + (me.index+1);
     }
     el.value = me.sec;
-    el.id = el.name
+    el.id = el.name;
 
     var answers = document.getElementById("id_production_strings");
     answers.appendChild(el);
@@ -173,8 +181,10 @@ me.check = function(x) {
     } else {
         me.makeguess(me.index);
     }
-}
+};
 
+// This function loads and displays the next string
+// it also counts the number of strings correctly solved
 me.makeguess = function(x) {
     if (x >= length_1) {
         alert("Error");
@@ -189,8 +199,11 @@ me.makeguess = function(x) {
 
         document.getElementById("id_production_strings").setAttribute("value",me.index);
     }
-}
+};
 
+
+// This function is called by the keydown event handler
+// it resets the time and triggers the checking function
 function keyDownTextField(e) {
   var keyCode = e.keyCode;
   if(keyCode==13) {
@@ -201,6 +214,7 @@ function keyDownTextField(e) {
     }
 }
 
+// This function is called by the keyup event handler and only blocks the enter button
 function keyUpTextField(e) {
   var keyCode = e.keyCode;
   if(keyCode==13) {
@@ -208,12 +222,15 @@ function keyUpTextField(e) {
   }
 }
 
+// This function is called by the keypress event handler and only blocks the enter button
 function keyPressTextField(e) {
   var keyCode = e.keyCode;
   if(keyCode==13) {
     event.preventDefault();
   }
 }
+
+// The following sends the participant to "switch" mode
 
 document.getElementById("Switch_button").addEventListener("click", function() {
     event.preventDefault();
@@ -234,6 +251,7 @@ document.getElementById("Switch_button").addEventListener("click", function() {
     var tokens = 0;
     var counter = document.getElementById('token_counter');
 
+    // This functions counts the earnings in "switch" dynamically and shows the total of strings solved
     function incrementSeconds() {
     tokens += 0.1;
     counter.innerText = Math.round( tokens * 10 ) / 10;
@@ -245,8 +263,10 @@ document.getElementById("Switch_button").addEventListener("click", function() {
     var sequences = document.getElementById("sequences_solved");
     sequences.innerText = sequences_solved;
 
-})
+});
 
+// displays the first string and starts the counter
+// Importantly, the event handlers are only called here once!!!
 window.onload = function(){
     me.makeguess(0);
     me.settime();
@@ -255,7 +275,7 @@ window.onload = function(){
     document.addEventListener("keydown", keyDownTextField, false);
     document.addEventListener("keyup", keyUpTextField, false);
     document.addEventListener("keypress", keyPressTextField, false);
-}
+};
     </script>
 {% endblock %}
 
