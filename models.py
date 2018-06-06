@@ -21,14 +21,14 @@ This is the competition part to a Tullock Contest in form of a Real Effort Task 
 class Constants(BaseConstants):
     name_in_url = 'tullock_Income_RET'
     players_per_group = 3
-    num_rounds = 3
+    num_rounds = 2
 
     t = 180  # Total Time in seconds available for both solving and staying in switch
     time_in_minutes = t / 60
 
     tokensper_string = 1
     tokensper_string_high = 2
-    eurosper_token = c(0.10)
+    eurosper_token = c(0.1)  # make sure to change it in both models
     secondsper_token = 10
 
     increase_per_string = 4
@@ -96,7 +96,8 @@ class Group(BaseGroup):
     # determine payoffs:
     def set_payoffs(self):
         for p in self.get_players():
-            p.payoff = p.income - p.investment_amount
+            p.net_income = p.income - p.investment_amount
+            p.payoff = p.net_income * Constants.eurosper_token
 
 
 class Player(BasePlayer):
@@ -140,6 +141,7 @@ class Player(BasePlayer):
     # available income after solving RET
     income = models.FloatField(default=0)
     income_strings = models.FloatField(default=0)
+    net_income = models.PositiveIntegerField(default=0)
 
     # Variable is 1 when entering switch
     switch1 = models.PositiveIntegerField(default=0)  # word "switch" cannot be used as a variable in javascript
