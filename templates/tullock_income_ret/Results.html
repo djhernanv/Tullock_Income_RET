@@ -40,14 +40,14 @@
     <th class="tg-s6z2">Investment</th>
     <th class="tg-s6z2">Probability of Winning</th>
     <th class="tg-s6z2">Wage in present round</th>
-    <th class="tg-s6z2">Income from Sequence Solving</th>
+    <th class="tg-s6z2">Income from Sequence Solving {% if Constants.treatment %} (After Tax and Redistribution) {% endif %}</th>
     <th class="tg-s6z2">No. of Sequences Solved</th>
     <th class="tg-s6z2">Income from Switch</th>
     <th class="tg-s6z2">Total Earnings</th>
   </tr>
   <tr>
     <td class="tg-s6z2"> <strong>{{ player.role }}</strong></td>
-    <td class="tg-s6z2"><strong>{{ player.investment_amount|floatformat:0 }}</strong></td>
+    <td class="tg-s6z2"><strong>{{ player.investment_amount|floatformat:2 }}</strong></td>
     <td class="tg-s6z2"><strong>{{ player.prob_percent|floatformat:2 }} %</strong> </td>
     <td class="tg-s6z2"> <strong>
         {% if subsession.round_number > 1 %}
@@ -60,14 +60,19 @@
                 1
         {% endif %}
     </strong></td>
-    <td class="tg-s6z2"> <strong>{{ player.income_strings|floatformat:0 }}</strong></td>
+    <td class="tg-s6z2"> <strong>{% if Constants.treatment %}
+        {{ player.available_income|floatformat:2 }}
+        {% else %}
+        {{ player.available_income|floatformat:0 }}</strong>
+        {% endif %}
+        </td>
     <td class="tg-s6z2"> <strong>{{ player.production_strings|floatformat:0 }}</strong></td>
     <td class="tg-s6z2"> <strong>{{ player.income_in_switch|floatformat:1 }}</strong></td>
-    <td class="tg-s6z2"> <strong>{{ player.income }}</strong></td>
+    <td class="tg-s6z2"> <strong>{{ player.earnings }}</strong></td>
   </tr>
   <tr>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.role }}</td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.0.investment_amount|floatformat:0 }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.0.investment_amount|floatformat:2 }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.prob_percent|floatformat:2 }} %</td>
     <td class="tg-s6z2">
             {% if subsession.round_number > 1 %}
@@ -80,14 +85,19 @@
                 1
         {% endif %}
     </td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.0.income_strings|floatformat:0 }}</td>
+    <td class="tg-s6z2">{% if Constants.treatment %}
+        {{ player.get_others_in_group.0.available_income|floatformat:2 }}
+        {% else %}
+        {{ player.get_others_in_group.0.available_income|floatformat:0 }}
+        {% endif %}
+        </td>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.production_strings|floatformat:0 }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.income_in_switch|floatformat:1 }} </td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.0.income|floatformat:1 }} </td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.0.earnings|floatformat:1 }} </td>
   </tr>
   <tr>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.role }}</td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.1.investment_amount|floatformat:0 }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.1.investment_amount|floatformat:2 }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.prob_percent|floatformat:2 }} %</td>
     <td class="tg-s6z2">
             {% if subsession.round_number > 1 %}
@@ -100,10 +110,14 @@
                 1
         {% endif %}
     </td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.1.income_strings|floatformat:0 }}</td>
+    <td class="tg-s6z2">{% if Constants.treatment %}
+        {{ player.get_others_in_group.1.available_income|floatformat:2 }}
+        {% else %}
+        {{ player.get_others_in_group.1.available_income|floatformat:0 }}
+        {% endif %}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.production_strings|floatformat:0 }}</td>
     <td class="tg-s6z2">{{ player.get_others_in_group.1.income_in_switch|floatformat:1 }}</td>
-    <td class="tg-s6z2">{{ player.get_others_in_group.1.income|floatformat:1 }}</td>
+    <td class="tg-s6z2">{{ player.get_others_in_group.1.earnings|floatformat:1 }}</td>
   </tr>
   <tfoot>
   <tr>

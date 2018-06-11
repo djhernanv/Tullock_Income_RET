@@ -21,20 +21,27 @@ This is the competition part to a Tullock Contest in form of a Real Effort Task 
 class Constants(BaseConstants):
     name_in_url = 'tullock_Income_RET'
     players_per_group = 3
-    num_rounds = 2
+    num_rounds = 6
 
     t = 180  # Total Time in seconds available for both solving and staying in switch
     time_in_minutes = t / 60
 
     tokensper_string = 1
     tokensper_string_high = 2
-    eurosper_token = c(0.1)  # make sure to change it in both models
+    eurosper_token = c(0.1)  # make sure to change it in both models.py
     secondsper_token = 10
 
     increase_per_string = 4
 
     # this is a summarized instruction to be shown under each sequence as a reminder:
     instructions_summarized = 'Tullock_Income_RET/InstructionsSum.html'
+
+    # Taxation Treatment
+    # The following variables allow to introduce a treatment of taxation and redistribution
+
+    treatment = True
+    tax_rate = 0.3
+    tax_rate_percent = tax_rate * 100
 
 
 class Subsession(BaseSubsession):
@@ -43,12 +50,13 @@ class Subsession(BaseSubsession):
 
 class Group(BaseGroup):
 
-    total_investments = models.IntegerField(initial=0)  # define group variable to calculate probabilities
+    total_investments = models.FloatField(initial=0)  # define group variable to calculate probabilities
 
     # determine total investments
 
     def set_total_investments(self):
-        total_investments = sum(p.investment_amount for p in self.get_players())  # retrieves a list of all individual incomes
+        total_investments = sum(p.investment_amount for p in self.get_players())
+        # retrieves a list of all individual incomes
         # and sums them up
         self.total_investments = total_investments
 
@@ -80,24 +88,65 @@ class Group(BaseGroup):
             p.participant.vars['is_winner'] = p.is_winner
 
     # determine income:
-    def set_incomes(self):
-        for p in self.get_players():
-            if self.round_number > 1:
-                if p.in_round(self.round_number - 1).is_winner:
-                    p.income_strings = p.production_strings * Constants.tokensper_string_high
-                    p.income = p.income_strings + p.income_in_switch
-                else:
-                    p.income_strings = p.production_strings * Constants.tokensper_string
-                    p.income = p.income_strings + p.income_in_switch
-            else:   # in the first round all start equally
-                p.income_strings = p.production_strings * Constants.tokensper_string
-                p.income = p.income_strings + p.income_in_switch
+    def set_incomes(self):  # income is defined in Tokens. What a player obtains at the end in currency are payoffs
+        if Constants.treatment:  # if taxation and redistribution are implemented. Only work income is taxed.
+            for p in self.get_players():
+                if self.round_number > 1:
+                    if p.in_round(self.round_number - 1).is_winner:
+                        p.income_strings_gross = p.production_strings * Constants.tokensper_string_high
+                        p.income_strings_after_tax = p.income_strings_gross * (1 - Constants.tax_rate)
+                    else:
+                        p.income_strings_gross = p.production_strings * Constants.tokensper_string
+                        p.income_strings_after_tax = p.income_strings_gross * (1 - Constants.tax_rate)
+
+                else:   # in the first round all start equally
+                    p.income_strings_gross = p.production_strings * Constants.tokensper_string
+                    p.income_strings_after_tax = p.income_strings_gross * (1 - Constants.tax_rate)
+
+        else:   # if taxation and redistribution are NOT implemented
+            for p in self.get_players():
+                if self.round_number > 1:
+                    if p.in_round(self.round_number - 1).is_winner:
+                        p.income_strings_gross = p.production_strings * Constants.tokensper_string_high
+                        p.income_strings_after_tax = p.income_strings_gross
+                    else:
+                        p.income_strings_gross = p.production_strings * Constants.tokensper_string
+                        p.income_strings_after_tax = p.income_strings_gross
+                else:   # in the first round all start equally
+                    p.income_strings_gross = p.production_strings * Constants.tokensper_string
+                    p.income_strings_after_tax = p.income_strings_gross
+
+
+    # determine redistribution
+
+    total_fiscal = models.FloatField(initial=0)
+    transfer = models.FloatField(initial=0)  # the amount per round that each participant receives
+
+    def set_fiscal(self):
+        if Constants.treatment:  # if taxation and redistribution are implemented
+            # define sum to be redistributed:
+            for p in self.get_players():
+                p.taxation = p.income_strings_gross * Constants.tax_rate
+            total_fiscal = sum(p.taxation for p in self.get_players())
+
+            self.total_fiscal = total_fiscal
+
+            # Redistribute total Budget equally among participants
+            for p in self.get_players():
+                self.transfer = self.total_fiscal/Constants.players_per_group
+                p.available_income = self.transfer + p.income_strings_after_tax
+                p.net_income = p.income_strings_after_tax + p.income_in_switch + self.transfer
+
+        else:  # if taxation and redistribution are NOT implemented
+            for p in self.get_players():
+                p.available_income = p.income_strings_gross
+                p.net_income = p.income_strings_gross + p.income_in_switch
 
     # determine payoffs:
     def set_payoffs(self):
         for p in self.get_players():
-            p.net_income = p.income - p.investment_amount
-            p.payoff = p.net_income * Constants.eurosper_token
+            p.earnings = p.net_income - p.investment_amount
+            p.payoff = p.earnings * Constants.eurosper_token
 
 
 class Player(BasePlayer):
@@ -136,12 +185,16 @@ class Player(BasePlayer):
     # Number of Tasks Solved
     production_strings = models.FloatField(default=0)
     income_in_switch = models.FloatField(default=0)
-    total_production = models.FloatField(default=0)
+    total_production = models.FloatField(default=0)  # the sum in tokens of earnings from string solving (gross) and switch
 
     # available income after solving RET
-    income = models.FloatField(default=0)
-    income_strings = models.FloatField(default=0)
-    net_income = models.PositiveIntegerField(default=0)
+    income_strings_gross = models.FloatField(default=0)
+    income_strings_after_tax = models.FloatField(default=0)
+    income_after_redistribution = models.FloatField(default=0)
+    net_income = models.FloatField(default=0)
+    available_income = models.FloatField(default=0)  # what players are allowed to invest
+    earnings = models.FloatField(default=0)  # what players keep after redistribution *and* investment
+    taxation = models.FloatField(default=0)  # amount taxed for given participant
 
     # Variable is 1 when entering switch
     switch1 = models.PositiveIntegerField(default=0)  # word "switch" cannot be used as a variable in javascript

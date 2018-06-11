@@ -32,11 +32,11 @@
     <div class="card-body">
 
     <p>
-        Your disposable income is <strong>{{ player.income_strings|floatformat:0 }} Token</strong>.
+        Your disposable income is <strong>{{ player.available_income|floatformat:2 }} Token</strong>.
     </p>
 
     <div class="form-group required">
-        <label class="control-label" for="id_investment_amount">Please submit your investment (from 0 to {{ player.income_strings|floatformat:0 }}):</label>
+        <label class="control-label" for="id_investment_amount">Please submit your investment (from 0 to {{ player.available_income|floatformat:0 }}):</label>
         <div class="controls">
             <input type="hidden" name="investment_amount" id="id_investment_amount" value="0">
             <div class="bid-slider"></div>
@@ -69,11 +69,12 @@ jQuery(document).ready(function ($) {
     $('.bid-slider').slider({
         min: 0,
         max: INCOME,
-        step: 0.1,
+        step: 0.01,
+        // make values below 0 and over 1 snap back
         slide: function (event, ui) {
             input.val(ui.value);
             updateBidValue();
-        },
+        }
     });
 
     function updateBidValue() {
