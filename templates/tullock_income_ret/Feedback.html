@@ -10,23 +10,35 @@
 <div class="card">
   <div class="card-header text-white bg-primary mb-3"> Your earnings from this round: </div>
   <div class="card-body">
-     You solved {{ player.production_strings|floatformat:0 }} sequences which earns you
-      {% if subsession.round_number > 1 %}
-          <strong>{{ player.income_strings|c|floatformat:0 }}</strong> Tokens.
-      {% endif %}
-      {% if subsession.round_number == 1 %}
-          <strong>{{ player.production_strings|c|floatformat:0 }}</strong> Tokens.
-      {% endif %}
+    <!-- Feedback if treatment is True -->
+    {% if Constants.treatment %}
+       You solved {{ player.production_strings|floatformat:0 }} sequences which earns you
+          {{ player.income_strings_gross|floatformat:0 }} Tokens. <br>
+       That income has been taxed with a rate of {{ Constants.tax_rate_percent|floatformat:0 }}%.<br>
+       Your income after taxation is <strong>{{ player.income_strings_after_tax|floatformat:2 }}</strong> Tokens<br>
+        <br>
+        The total taxes have been collected and you receive <strong>{{ group.transfer|floatformat:2 }}</strong> Tokens.
       <br>
      You spent {{player.time_in_switch}} seconds in the <em>switch mode</em> which earns you <strong>{{ player.income_in_switch|c|floatformat:1 }}</strong> Tokens.<br><br>
-     Your total income in this round is therefore: <strong>{{ player.income|c|floatformat:1 }}</strong> Tokens. <br>
-  </div>
+     Your total income in this round is therefore: <strong>{{ player.net_income|floatformat:1 }}</strong> Tokens. <br>
 
-{% if subsession.round_number > Constants.num_rounds %}
+     <!-- Feedback if treatment is False -->
+    {% else %}
+     You solved {{ player.production_strings|floatformat:0 }} sequences which earns you
+          <strong>{{ player.income_strings_gross|c|floatformat:0 }}</strong> Tokens.
+      <br>
+     You spent {{player.time_in_switch}} seconds in the <em>switch mode</em> which earns you <strong>{{ player.income_in_switch|c|floatformat:1 }}</strong> Tokens.<br><br>
+     Your total income in this round is therefore: <strong>{{ player.net_income|c|floatformat:1 }}</strong> Tokens. <br>
+    {% endif %}
+
+  </div>
 </div>
+    <br>
+
+{% if subsession.round_number < Constants.num_rounds %}
     <div class="alert alert-info" role="alert">
-    <p> In the next screen you will have the opportunity to invest some of your income from this round in order to win the higher wage.
-    Your probability of winning will be equal to the share of your investment in relation to the total investments.</p>
+    <p> In the next screen you will have the opportunity to invest your income from solving sequences in this round in order to win the higher wage.
+    Your probability of winning will be equal to the share of your investment in relation to the sum of all investments by the group.</p>
     </div>
 {% endif %}
 </div>

@@ -129,6 +129,7 @@ class RET(Page):
 class Waiting2(WaitPage):
     def after_all_players_arrive(self):
         self.group.set_incomes()
+        self.group.set_fiscal()
 
 
 class BeliefsInvestment(Page):
@@ -149,7 +150,7 @@ class Investment(Page):
     form_fields = ['investment_amount']
 
     def vars_for_template(self):
-        return {'income': safe_json(self.player.income_strings)}
+        return {'income': safe_json(self.player.available_income)}
 
     def is_displayed(self):
         return self.round_number < Constants.num_rounds

@@ -34,13 +34,30 @@
        The other players will keep their wage of {{ Constants.tokensper_string|apnumber }} token per string. All participants in all rounds will get 1 token per
        {{ Constants.secondsper_token }} seconds spent in "switch".
    </p>
+       {% if Constants.treatment %}
+       <p>
+       Your income from solving sequences will be taxed at at rate of {{ Constants.tax_rate_percent }}%. The taxes collected from all participants in your group
+       will be equally distributed among the group after each round.
+       </p>
+       {% endif %}
         </div>
         </div>
     <p>
+    {% if Constants.treatment %}
+
+        To win the higher wage you will have the opportunity to invest your earnings from counting "a"s in the <i>Letter Counting Task</i> (but not those from spending time in "switch")
+        plus your share of the redistributed taxes.<br>
+        For instance, if you solved 10 sequences with a wage of 1 Token per sequence your income after taxation of 30% is equal to 7 token.
+        Assuming that you get 2 Tokens from redistribution, your total available income for investing would be equal to 9 tokens.
+
+    {% else %}
         To win the higher wage you will have the opportunity to invest some of your earnings from counting "a"s in the <i>Letter Counting Task</i>
         (but not those from spending time in "switch").
+    {% endif %}
+    </p>
+    <p>
         Your probability of obtaining the higher wage is equal to your share of all the investments in your group. You can keep the tokens that you do not invest,
-        but your investment will not be refunded if you do not win the prize. You cannot you use your earnings from previous rounds.
+        but your investment will not be refunded if you do not win the prize. You cannot use your earnings from previous rounds.
         The more you invest, the higher are your chances!
     </p>
     <p>

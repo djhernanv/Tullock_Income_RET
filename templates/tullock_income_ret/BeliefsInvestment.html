@@ -20,10 +20,10 @@ Please answer the following questions:
 <ol type="1"> <!-- This starts a numbered list -->
 
 
-   <li> How much do you think will player {{ player.get_others_in_group.0.role }} invest?:
+   <li> How much do you think will player {{ player.get_others_in_group.0.role }} invest in the present round (2.{{ subsession.round_number }})?:
        {% formfield player.investment_belief_0 label="" %} </li>
 
-   <li> How much do you think will player {{ player.get_others_in_group.1.role }} invest?:
+   <li> How much do you think will player {{ player.get_others_in_group.1.role }} invest in the present round (2.{{ subsession.round_number }})?:
        {% formfield player.investment_belief_1 label="" %} </li>
 
 </ol>
