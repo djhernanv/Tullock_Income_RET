@@ -68,7 +68,7 @@
         </td>
     <td class="tg-s6z2"> <strong>{{ player.production_strings|floatformat:0 }}</strong></td>
     <td class="tg-s6z2"> <strong>{{ player.income_in_switch|floatformat:1 }}</strong></td>
-    <td class="tg-s6z2"> <strong>{{ player.earnings }}</strong></td>
+    <td class="tg-s6z2"> <strong>{{ player.earnings|floatformat:1 }}</strong></td>
   </tr>
   <tr>
     <td class="tg-s6z2">{{ player.get_others_in_group.0.role }}</td>
