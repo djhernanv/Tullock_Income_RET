@@ -21,14 +21,14 @@ This is the competition part to a Tullock Contest in form of a Real Effort Task 
 class Constants(BaseConstants):
     name_in_url = 'tullock_Income_RET'
     players_per_group = 3
-    num_rounds = 6
+    num_rounds = 8
 
     t = 180  # Total Time in seconds available for both solving and staying in switch
     time_in_minutes = t / 60
 
     tokensper_string = 1
     tokensper_string_high = 2
-    eurosper_token = c(0.1)  # make sure to change it in both models.py
+    eurosper_token = c(0.2)  # make sure to change it in both models.py
     secondsper_token = 10
 
     increase_per_string = 4
