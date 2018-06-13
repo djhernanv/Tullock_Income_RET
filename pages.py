@@ -41,7 +41,7 @@ class Waiting(WaitPage):
             np.random.seed(
                 13 + n + self.round_number)  # on every turn of the loop a new character list will be created
             character_list += "a" * np.random.randint(15, 30)  # this gives, in average one "a" for each letter
-            np.random.seed(7 + n + + self.round_number)  # to ensure reproducibility
+            np.random.seed(7 + n + self.round_number)  # to ensure reproducibility
             #  of the alphabet s.t. the relationship is 2:1 but still allows for enough variability
             string_list.append("".join(np.random.choice(list(character_list), size=n)))
         self.session.vars['string_list'] = string_list

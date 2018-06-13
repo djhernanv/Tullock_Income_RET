@@ -33,7 +33,7 @@ and create the folder for the app with ```mkdir Tullock_Income_RET``` .
   ]
 ~~~
 4. Either download or, ideally, clone this repository and add its contents to the "Tullock_Income_RET" folder.
-1. This app runs on oTree 2.0, uses Bootstrap 4.0 and requires Python 3.0
+1. This app runs on oTree 2.0, uses Bootstrap 4.0 and requires Python 3.6
 1. This app is optimized for Chrome.
 1. Ready! :-)
 

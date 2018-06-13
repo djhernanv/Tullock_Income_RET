@@ -1,10 +1,8 @@
 {% load otree staticfiles %}
 
-<div class="instructions well well-lg">
-
-    <h3 class="panel-sub-heading">
-        Instructions
-    </h3>
+<div class="card">
+    <div class="card-header text-white bg-primary mb-3"> Instructions </div>
+    <div class="card-body">
 
     <p>
         Your task is to count how many <strong> "a"s </strong> there are in the sequence of characters currently displayed.
@@ -22,7 +20,7 @@
         In the <strong> switch mode </strong> you will get 1 Token per each {{ Constants.secondsper_token }} seconds in "switch".
     </p>
     <p>
-        For your convenience, these instructions will remain available during all screens of this task.
+        <strong>This round lasts {{ Constants.time_in_minutes|floatformat:0 }} Minutes.</strong>
     </p>
-
+    </div>
 </div>
