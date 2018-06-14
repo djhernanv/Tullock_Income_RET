@@ -20,8 +20,8 @@ class CompetitionInstructions2Example(Page):
         return self.round_number == 1
 
     def vars_for_template(self):
-        return {'income_1': self.participant.vars['income_1'],
-                'income_2': self.participant.vars['income_2'],
+        return {'income_1': self.participant.vars['net_income_1'],
+                'income_2': self.participant.vars['net_income_2'],
                 }
 
 
