@@ -28,7 +28,7 @@ class Constants(BaseConstants):
 
     tokensper_string = 1
     tokensper_string_high = 2
-    eurosper_token = c(0.2)  # make sure to change it in both models.py
+    eurosper_token = c(0.1)  # make sure to change it in both models.py
     secondsper_token = 10
 
     increase_per_string = 4

@@ -52,6 +52,18 @@ class Waiting(WaitPage):
         self.session.vars['a_count'] = a_count
 
 
+class RoundStart(Page):
+    def is_displayed(self):
+        return self.round_number > 1
+
+    def vars_for_template(self):
+        if self.round_number > 1:
+            return {'winner_last': self.player.in_round(self.round_number - 1).is_winner,
+                    'winner_last_0': self.player.get_others_in_group()[0].in_round(self.round_number - 1).is_winner,
+                    'winner_last_1': self.player.get_others_in_group()[1].in_round(self.round_number - 1).is_winner,
+                    }
+
+
 class BeliefsProduction(Page):
     form_model = 'player'
     form_fields = [
@@ -183,6 +195,7 @@ page_sequence = [
     CompetitionInstructions1,
     CompetitionInstructions2Example,
     CompetitionInstructions3,
+    RoundStart,  # informs about the present round. Visible after round 2
     BeliefsProduction,
     Waiting,  # creates string list
     StartSubmit,
