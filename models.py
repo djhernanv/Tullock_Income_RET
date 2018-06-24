@@ -45,7 +45,12 @@ class Constants(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+    # save setting values as an extra column
+    def creating_session(self):
+        for p in self.get_players():
+            p.num_rounds = Constants.num_rounds
+            p.treatment = Constants.treatment
+            p.tax_rate = Constants.tax_rate
 
 
 class Group(BaseGroup):
@@ -150,6 +155,11 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+
+    # create a column for each constant
+    num_rounds = models.PositiveIntegerField()
+    treatment = models.BooleanField()
+    tax_rate = models.FloatField()
 
     # give each player a letter for identification (Important for Feedback)
     def role(self):
